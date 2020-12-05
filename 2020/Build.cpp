@@ -3,87 +3,32 @@
 /*
 clang++ Build.cpp -o Build.exe -std=c++17
 */
-Build day1(Flags flags) noexcept;
-Build day2(Flags flags) noexcept;
-Build day3(Flags flags) noexcept;
-Build day4(Flags flags) noexcept;
-Build day5(Flags flags) noexcept;
+
+#define X(n)\
+Build day##n(Flags flags) {\
+	if (!flags.output) flags.output = "Day"#n"/";\
+	auto b = Build::get_default(flags);\
+	b.name = "Day"#n;\
+	b.add_source("Day"#n"/Main.cpp");\
+	b.add_define("_CRT_SECURE_NO_WARNINGS");\
+	return b;\
+}
+X(1) X(2) X(3) X(4) X(5)
+#undef X
+
 
 Build build(Flags flags) noexcept {
-	auto start = day1(flags);
-	auto* curr = &start;
 
-	curr->next = day2(flags);
-	curr = curr->next.b;
-	
-	curr->next = day3(flags);
-	curr = curr->next.b;
+	auto f = std::vector<Build(*)(Flags)>{ day1, day2, day3, day4, day5 };
+	Build curr = f.back()(flags);
 
-	curr->next = day4(flags);
-	curr = curr->next.b;
+	for (size_t i = f.size() - 2; i + 1 > 0; --i) {
+		auto& x = f[i];
 
-	curr->next = day5(flags);
-	curr = curr->next.b;
-	
-	return start;
+		auto n = x(flags);
+		n.next = curr;
+		curr = n;
+	}
+
+	return curr;
 }
-
-Build day1(Flags flags) noexcept {
-	if (!flags.output) flags.output = "Day1/";
-
-	auto b = Build::get_default(flags);
-
-	b.name = "Day1";
-
-	b.add_source("Day1/Main.cpp");
-	
-	return b;
-}
-
-Build day2(Flags flags) noexcept {
-	if (!flags.output) flags.output = "Day2/";
-
-	auto b = Build::get_default(flags);
-
-	b.name = "Day2";
-
-	b.add_source("Day2/Main.cpp");
-	
-	return b;
-}
-Build day3(Flags flags) noexcept {
-	if (!flags.output) flags.output = "Day3/";
-
-	auto b = Build::get_default(flags);
-
-	b.name = "Day3";
-
-	b.add_source("Day3/Main.cpp");
-	
-	return b;
-}
-Build day4(Flags flags) noexcept {
-	if (!flags.output) flags.output = "Day4/";
-
-	auto b = Build::get_default(flags);
-
-	b.name = "Day4";
-
-	b.add_source("Day4/Main.cpp");
-	
-	return b;
-}
-
-
-Build day5(Flags flags) noexcept {
-	if (!flags.output) flags.output = "Day5/";
-
-	auto b = Build::get_default(flags);
-
-	b.name = "Day5";
-
-	b.add_source("Day5/Main.cpp");
-	
-	return b;
-}
-

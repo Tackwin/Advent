@@ -81,6 +81,8 @@ int main(int, char**) {
 					std::begin(it), std::end(it), [](char c) { return std::isdigit(c); }
 				) != 9;
 				break;
+			default:
+				break;
 			}
 
 			if (not_valid) break;
