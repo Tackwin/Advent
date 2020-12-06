@@ -5,15 +5,13 @@
 #include <cstdlib>
 #include <array>
 
-
 using Entry = std::array<std::vector<bool>, 26>;
 
-std::vector<Entry> get_inputs1(std::filesystem::path p) noexcept;
-std::vector<Entry> get_inputs2(std::filesystem::path p) noexcept;
+std::vector<Entry> get_inputs(std::filesystem::path p) noexcept;
 
 int main(int, char**) {
 
-	auto entries = get_inputs1("Day6/input");
+	auto entries = get_inputs("Day6/input");
 
 	#define B(x) std::begin(x)
 	#define E(x) std::end(x)
@@ -29,9 +27,7 @@ int main(int, char**) {
 	return 0;
 }
 
-
-
-std::vector<Entry> get_inputs1(std::filesystem::path p) noexcept {
+std::vector<Entry> get_inputs(std::filesystem::path p) noexcept {
 	std::fstream f;
 	std::string l;
 	std::vector<Entry> entries;
