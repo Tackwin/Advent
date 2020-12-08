@@ -2,3 +2,4 @@ ease_build
 *.exe
 *.ilk
 *.pdb
+.vscode
