@@ -39,8 +39,8 @@ if (run_day < 0 || run_day == %1) {
 		print(
 			" (in %%s):\n  Part1: %%\n  Part2: %%\n\n",
 			formatFloat(t, trailing_width=7),
-			formatInt(r1, digits_per_comma=3, comma_string=","),
-			formatInt(r2, digits_per_comma=3, comma_string=",")
+			formatInt(r1, digits_per_comma=3, comma_string="."),
+			formatInt(r2, digits_per_comma=3, comma_string=".")
 		);
 	}
 	reset_temporary_storage();
