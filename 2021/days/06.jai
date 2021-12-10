@@ -5,7 +5,6 @@
 
 part1 :: (fishes : [] int) -> int {
 	lanternfish : [..] int;
-	defer free(*lanternfish);
 	for fishes array_add(*lanternfish, it);
 	
 	
@@ -28,7 +27,6 @@ part1 :: (fishes : [] int) -> int {
 
 part2 :: (fishes : [] int) -> int {
 	lanternfish : [..] int;
-	defer free(*lanternfish);
 	for fishes array_add(*lanternfish, it);
 	
 	cache : [10] int;

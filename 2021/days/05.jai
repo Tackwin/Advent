@@ -109,7 +109,6 @@ main :: () -> (int, int) {
 	file_lines := split(input, "\n");
 	lines : [..] Line;
 	array_reserve(*lines, file_lines.count);
-	defer free(*lines);
 
 	for file_lines if it.data {
 		t := split(it, "->");

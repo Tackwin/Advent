@@ -58,7 +58,6 @@ main :: () -> (int, int) {
 
 	lines := split(input, "\n");
 	move_lines : [..] Move;
-	defer { free(*move_lines); }
 
 	for lines if it.data {
 		first := find_index_from_left(it, #char " ");

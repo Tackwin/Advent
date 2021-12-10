@@ -26,7 +26,6 @@ part2 :: (lines: [] string) -> int {
 	mask : [..]bool;
 	for lines array_add(*mask, true);
 	mask[mask.count - 1] = false;
-	defer array_free(mask);
 
 	o2 := "";
 	co2 := "";

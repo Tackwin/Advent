@@ -45,7 +45,6 @@ main :: () -> (int, int) {
 
 	lines := split(input, "\n");
 	int_lines : [..] int;
-	defer { free(*int_lines); }
 
 	for lines array_add(*int_lines, parse_int(*it));
 

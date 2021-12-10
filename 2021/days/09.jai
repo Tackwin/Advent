@@ -26,7 +26,6 @@ part2 :: (heights : [] int, w: int, h: int) -> int {
 	};
 
 	low_points : [..] Point;
-	defer free(*low_points);
 
 	for x: 0..w-1 for y: 0..h-1 {
 		it := heights[x + y * w];

@@ -10,8 +10,6 @@ Game :: struct {
 
 part1 :: (game: Game) -> int {
 	mask : [..][25] bool;
-	defer free(*mask);
-
 	array_resize(*mask, game.boards.count);
 
 	is_winning :: (m: [25] bool) -> bool {
@@ -36,6 +34,7 @@ part1 :: (game: Game) -> int {
 		}
 	}
 
+
 	return 0;
 }
 
@@ -43,9 +42,6 @@ part2 :: (game: Game) -> int {
 	mask : [..][25] bool;
 	won : [..]bool;
 	
-	defer free(*mask);
-	defer free(*won);
-
 	left_to_win := game.boards.count;
 
 	array_resize(*mask, game.boards.count);
@@ -94,9 +90,6 @@ main :: () -> (int, int) {
 
 	orders : [..]int;
 	boards : [..][25] int;
-
-	defer free(*orders);
-	defer free(*boards);
 
 	for order_strings {
 		x, _, __ := to_integer(it);
