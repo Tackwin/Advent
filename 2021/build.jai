@@ -12,10 +12,13 @@ build :: () {
 		import : [..] string;
 
 		opts := get_build_options();
+
 		opts.output_executable_name = "advent";
+
 		for opts.import_path array_add(*import, it);
 		array_add(*import, #filepath);
 		opts.import_path = import;
+
 		set_build_options(opts, w);
 
 
