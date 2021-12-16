@@ -5,13 +5,66 @@
 #import "Hash_Table";
 #import "Hash";
 
+
+resort :: (arr : [] int, m: [] int) {
+	idx := 0;
+	while idx < arr.count - 1 && m[arr[idx]] <= m[arr[idx + 1]] { idx += 1; }
+
+	removed := arr[idx + 1];
+
+	for idx+1..arr.count-2 arr[it] = arr[it + 1];
+
+	new_idx := 0;
+	while new_idx < arr.count - 2 && m[arr[new_idx]] <= m[removed] { new_idx += 1; }
+
+	for < arr.count-1..new_idx+1 arr[it] = arr[it - 1];
+	arr[new_idx] = removed;
+}
+
+quick_sort :: (array: [] int, dist: [] int) {
+	// @Cleanup: This is a cutnpaste from the Quicksort above, except
+	// with a different type of f. If we could do some kind of fancy
+	// thing with static_if, we would not have to copy and paste the code.
+
+	quicksort_helper :: (a: *int, n: s64, dist: [] int) {
+		if n < 2 return;
+
+		p := a[n / 2];
+
+		i := 0;
+		j := n-1;
+
+		while true {
+			fp := dist[p];
+			while dist[a[i]] < fp  {i += 1;}
+			while fp < dist[a[j]]  {j -= 1;}
+
+			if i >= j break;
+
+			t := a[i];
+			a[i] = a[j];
+			a[j] = t;
+
+			i += 1;
+			j -= 1;
+		}
+		
+		quicksort_helper(a, i, dist);
+		quicksort_helper(a + i, n - i, dist);
+	}
+
+	quicksort_helper(array.data, array.count, dist);
+}
+
 part1 :: (grid: [] int, w: int, h: int) -> int {
 
 	dist := array_copy(grid);
 	prev := array_copy(grid);
+	visited := array_copy(grid);
 
 	for * dist{ <<it = 1 << 62; }
 	for * prev{ <<it = -1; }
+	for * visited{ <<it = 0; }
 
 	dist[0] = 0;
 
@@ -20,8 +73,6 @@ part1 :: (grid: [] int, w: int, h: int) -> int {
 	for * Q{ <<it = it_index; };
 
 	find_min :: (Q: [] int, dist: [] int) -> (int, int, int) {
-		if Q.count == 0 return -1, -1, -1;
-		
 		m := dist[Q[0]];
 		m_idx := 0;
 
@@ -38,43 +89,51 @@ part1 :: (grid: [] int, w: int, h: int) -> int {
 		return m, Q[m_idx], m_idx;
 	}
 
-	find_node :: (Q: [] int, n: int) -> bool {
-		for Q if it == n return true;
-		return false;
-	}
-
 	while Q.count > 0 {
 		d, a, q_idx := find_min(Q, dist);
 
-		for q_idx..Q.count-2 Q[it] = Q[it+1];
+		Q[q_idx] = Q[Q.count-1];
 		Q.count -= 1;
+		visited[a] = 1;
 
 		a_x := a % w;
 		a_y := a / h;
 
-		v := (a_x - 1) + (a_y - 0) * w;
-		alt := d + grid[v];
-		if a_x > 0 && alt < dist[v] && find_node(Q, v) {
-			dist[v] = alt;
-			prev[v] = a;
+		if a_x > 0 {
+			v := (a_x - 1) + (a_y - 0) * w;
+			alt := d + grid[v];
+			if alt < dist[v] && visited[v] <= 0 {
+				dist[v] = alt;
+				prev[v] = a;
+				// resort(Q, dist);
+			}
 		}
-		v = (a_x + 1) + (a_y - 0) * w;
-		alt = d + grid[v];
-		if a_x + 1 < w && alt < dist[v] && find_node(Q, v) {
-			dist[v] = alt;
-			prev[v] = a;
+		if a_x + 1 < w {
+			v := (a_x + 1) + (a_y - 0) * w;
+			alt := d + grid[v];
+			if alt < dist[v] && visited[v] <= 0 {
+				dist[v] = alt;
+				prev[v] = a;
+				// resort(Q, dist);
+			}
 		}
-		v = (a_x + 0) + (a_y - 1) * w;
-		alt = d + grid[v];
-		if a_y > 0 && alt < dist[v] && find_node(Q, v) {
-			dist[v] = alt;
-			prev[v] = a;
+		if a_y > 0 {
+			v := (a_x + 0) + (a_y - 1) * w;
+			alt := d + grid[v];
+			if alt < dist[v] && visited[v] <= 0 {
+				dist[v] = alt;
+				prev[v] = a;
+				// resort(Q, dist);
+			}
 		}
-		v = (a_x + 0) + (a_y + 1) * w;
-		alt = d + grid[v];
-		if a_y + 1 < h && alt < dist[v] && find_node(Q, v) {
-			dist[v] = alt;
-			prev[v] = a;
+		if a_y + 1 < h {
+			v := (a_x + 0) + (a_y + 1) * w;
+			alt := d + grid[v];
+			if a_y + 1 < h && alt < dist[v] && visited[v] <= 0 {
+				dist[v] = alt;
+				prev[v] = a;
+				// resort(Q, dist);
+			}
 		}
 	}
 
