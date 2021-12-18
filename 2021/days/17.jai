@@ -4,6 +4,7 @@
 #import "Sort";
 #import "Hash_Table";
 #import "Hash";
+#import "Math";
 
 part1 :: (x: int, y: int, w: int, h: int) -> int {
 
@@ -12,7 +13,7 @@ part1 :: (x: int, y: int, w: int, h: int) -> int {
 	}
 
 	max_h := 0;
-	for start_vx: 0..1000 for start_vy: -1000..1000 {
+	for start_vx: 0..w for start_vy: h..1000 {
 
 		vx := start_vx;
 		vy := start_vy;
@@ -48,7 +49,7 @@ part2 :: (x: int, y: int, w: int, h: int) -> int {
 
 	n := 0;
 	
-	for start_vx: 0..1000 for start_vy: -1000..1000 {
+	for start_vx: 0..w for start_vy: -1000..1000 {
 		vx := start_vx;
 		vy := start_vy;
 		px := 0;
