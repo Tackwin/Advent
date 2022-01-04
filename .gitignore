@@ -1,4 +1,1 @@
-*.pdb
-*.exe
-.build
-.vscode
+**/target/
