@@ -34,13 +34,18 @@ if (run_day < 0 || run_day == %1) {
 	push_context new_context {
 		print("Day%%", "%1");
 		t := get_time();
-		r1, r2 := Day_%1.main();
+		int_f :: #type () -> (int, int);
+		#if type_of(Day_%1.main) == int_f {
+			a, b := Day_%1.main();
+			r1 := tprint("%%", formatInt(a, digits_per_comma=3, comma_string="."));
+			r2 := tprint("%%", formatInt(b, digits_per_comma=3, comma_string="."));
+		} else {
+			r1, r2 := Day_%1.main();
+		}
 		t = get_time() - t;
 		print(
 			" (in %%s):\n  Part1: %%\n  Part2: %%\n\n",
-			formatFloat(t, trailing_width=7),
-			formatInt(r1, digits_per_comma=3, comma_string="."),
-			formatInt(r2, digits_per_comma=3, comma_string=".")
+			formatFloat(t, trailing_width=7), r1, r2
 		);
 	}
 	reset_temporary_storage();
