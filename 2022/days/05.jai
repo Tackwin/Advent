@@ -114,7 +114,7 @@ part2 :: (input: string) -> string {
 }
 
 main :: () -> (string, string) {
-	input, success := read_entire_file("Inputs/05.txt");
+	input, success :: #run read_entire_file("Inputs/05.txt");
 	if !success {
 		print("Error reading input\n");
 		return "Error reading input", "Error reading input";

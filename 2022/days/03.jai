@@ -73,7 +73,7 @@ part2 :: (input: string) -> int {
 }
 
 main :: () -> (int, int) {
-	input, success := read_entire_file("Inputs/03.txt");
+	input, success :: #run read_entire_file("Inputs/03.txt");
 	if !success {
 		print("Error reading input\n");
 		return (-1, -1);
